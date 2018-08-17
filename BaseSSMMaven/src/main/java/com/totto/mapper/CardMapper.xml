@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.totto.mapper.CardMapper">
+	<!-- 根据id查询Card，返回Card对象 -->
+	<select id="selectCardById" parameterType="int" resultType="com.totto.pojo.Card">
+		select * from tb_card where id=#{id}
+	</select>
+	
+	<insert id="insertCard" useGeneratedKeys="true" keyProperty="id">
+		insert into tb_card(code) values(#{code})
+	</insert>
+</mapper>

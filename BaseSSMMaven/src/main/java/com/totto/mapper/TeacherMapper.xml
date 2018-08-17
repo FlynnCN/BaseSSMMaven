@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.totto.mapper.TeacherMapper">
+	<resultMap type="com.totto.pojo.Teacher" id="teacherResultMap">
+		<id property="id" column="id"/>
+		<result property="sex" column="sex"/>
+		<result property="name" column="name"/>
+		<result property="age" column="age"/>
+		<!-- 多对一关联映射：association -->
+		<association property="clazz" javaType="com.totto.pojo.Clazz">
+			<id property="id" column="cid"/>
+			<result property="code" column="code"/>
+			<result property="name" column="cname"/>
+		</association>
+	</resultMap>
+	
+	<!-- 根据班级id查询教师信息，返回Teacher -->
+	<select id="selectTeacherByClazzId" parameterType="int" resultType="com.totto.pojo.Teacher">
+		select * from tb_teacher where clazz_id=#{id}
+	</select>
+	
+	<!-- 根据id查询老师信息，多表连接，返回resultMap -->
+	<select id="selectTeacherById" parameterType="int" resultMap="teacherResultMap">
+		select t.*,c.id cid,c.name cname,c.code from tb_clazz c,tb_teacher t where c.id=t.clazz_id and t.id=#{id}
+	</select>
+	
+	<insert id="insertTeacher" useGeneratedKeys="true" keyProperty="id">
+		insert into tb_teacher(name,sex,age,clazz_id) values(#{name},#{sex},#{age},#{clazz.id})
+	</insert>
+</mapper>

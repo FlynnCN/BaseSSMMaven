@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.totto.mapper.ClazzMapper">
+	<resultMap type="com.totto.pojo.Clazz" id="clazzResultMap">
+		<id property="id" column="id"/>
+		<result property="code" column="code"/>
+		<result property="name" column="name"/>
+		<!-- 一对多关联映射：collection fetchType="lazy"表示懒加载 -->
+		<collection property="teachers" javaType="ArrayList" column="id" ofType="com.totto.pojo.Teacher" select="com.totto.mapper.TeacherMapper.selectTeacherByClazzId" fetchType="lazy">
+			<id property="id" column="id"/>
+			<result property="name" column="name"/>
+			<result property="sex" column="sex"/>
+			<result property="age" column="age"/>
+		</collection>
+	</resultMap>
+	
+	<resultMap type="com.totto.pojo.Clazz" id="clazzResultMap2">
+		<id property="id" column="id"/>
+		<result property="code" column="code"/>
+		<result property="name" column="name"/>
+		<!-- 一对多关联映射：collection fetchType="lazy"表示懒加载 -->
+		<collection property="teachers" ofType="com.totto.pojo.Teacher" fetchType="lazy">
+			<id property="id" column="tid"/>
+			<result property="name" column="tname"/>
+			<result property="sex" column="sex"/>
+			<result property="age" column="age"/>
+		</collection>
+	</resultMap>
+	
+	<!-- 根据id查询班级信息，返回resultMap -->
+	<select id="selectClazzById" parameterType="int" resultMap="clazzResultMap">
+		select * from tb_clazz where id=#{id}
+	</select>
+	
+	<!-- 根据id查询班级信息，返回resultMap -->
+	<select id="selectClazzById2" parameterType="int" resultMap="clazzResultMap2">
+		select c.*,t.id as tid,t.name as tname,t.sex,t.age from tb_clazz c,tb_teacher t where c.id=t.clazz_id and c.id=#{id}
+	</select>
+	
+	<insert id="insertClazz" useGeneratedKeys="true" keyProperty="id">
+		insert into tb_clazz(code,name) values(#{code},#{name})
+	</insert>
+</mapper>

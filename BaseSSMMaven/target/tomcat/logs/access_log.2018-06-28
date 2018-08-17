@@ -1,0 +1,2 @@
+0:0:0:0:0:0:0:1 - - [28/Jun/2018:20:00:48 +0800] "GET /BaseSSMMaven/person/selectPersonById?id=1 HTTP/1.1" 200 98 http-bio-8080-exec-1 1042
+0:0:0:0:0:0:0:1 - - [28/Jun/2018:20:00:48 +0800] "GET /favicon.ico HTTP/1.1" 404 - http-bio-8080-exec-3 0

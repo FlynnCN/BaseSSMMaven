@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.totto.mapper.StudentMapper">
+	<resultMap type="com.totto.pojo.Student" id="studentResultMap">
+		<id property="id" column="id"/>
+		<result property="name" column="name"/>
+		<result property="age" column="age"/>
+		<result property="createtime" column="createtime"/>
+	</resultMap>
+	
+	<select id="selectById" parameterType="int" resultMap="studentResultMap">
+		select * from t_student where id=#{id}
+	</select>
+	
+	<select id="selectAll" resultMap="studentResultMap">
+		select * from t_student
+	</select>
+	
+	<insert id="insert" parameterType="com.totto.pojo.Student" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+		insert into t_student(name,age,createtime) values(#{name},#{age},#{createtime})
+	</insert>
+	
+	<update id="update" parameterType="com.totto.pojo.Student">
+		update t_student set name=#{name},age=#{age},createtime=#{createtime} where id=#{id}
+	</update>
+	
+	<delete id="deleteById" parameterType="int">
+		delete from t_student where id=#{id}
+	</delete>
+</mapper>
